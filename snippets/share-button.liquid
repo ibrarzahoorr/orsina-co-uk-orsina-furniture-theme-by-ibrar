@@ -1,0 +1,144 @@
+{% comment %}
+  Renders share button.
+  Accepts:
+  - block: {Object} either passing the block/section.
+  - share_link: {String} url to be added to the input the user will get/copy.
+  - share_title: {String} title to be added to the social.
+  - share_image: {String} image to be added to the social.
+  Usage:
+  {% render 'share-button',
+    block: block,
+    share_link: share_url,
+    share_title: share_title,
+    share_image: share_image
+  %}
+{% endcomment %}
+<share-button
+  id="Share-{{ section.id }}"
+  class="share-button"
+  {{ block.shopify_attributes }}
+>
+  <button class="share-button__button link link-with-icon hidden" type="button">
+    {% render 'icon', icon: 'share' %}
+    <span class="label">{{ block.settings.share_label | escape }}</span>
+  </button>
+  <details id="Details-{{ block.id }}-{{ section.id }}">
+    <summary class="share-button__button link link-with-icon">
+      {% render 'icon', icon: 'share' %}
+      <span class="label">{{ block.settings.share_label | escape }}</span>
+    </summary>
+    <div id="Product-share-{{ section.id }}" class="share-button__fallback motion-reduce">
+      <button class="share-button__close no-js-hidden">
+        {% render 'icon', icon: 'close-alt' %}
+        <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+      </button>
+      <div class="field">
+        <label class="field__label" for="url-{{ block.id }}-{{ section.id }}">{{ 'general.share.share_url' | t }}</label>
+        <div class="share-button__field">
+          <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status"></span>
+          <input
+            type="text"
+            class="field__input share-button__input"
+            id="url-{{ block.id }}-{{ section.id }}"
+            value="{{ share_link }}"
+            placeholder="{{ 'general.share.share_url' | t }}"
+            readonly
+          />
+          <button class="share-button__copy button button--small medium-hide large-up-hide no-js-hidden">
+            {% render 'icon', icon: 'clipboard' %}
+            <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field__label">{{ 'general.share.share' | t }}</span>
+        <ul class="list-social list-unstyled">
+          {%- if settings.share_facebook -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//www.facebook.com/sharer.php?u={{ share_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'facebook' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_facebook' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_twitter -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//twitter.com/intent/tweet?text={{ share_title | url_param_escape }}&amp;url={{ share_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'twitter' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_twitter' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_pinterest -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//pinterest.com/pin/create/button/?url={{ share_link }}&amp;media={{ share_image | image_url }}&amp;description={{ share_title | url_param_escape }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'pinterest' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_pinterest' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_whatsapp -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//web.whatsapp.com/send?text={{ share_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'whatsapp' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_whatsapp' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_telegram -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="//telegram.me/share/url?url={{ share_link }}&amp;media={{ share_image | image_url }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {% render 'icon-brand', icon: 'telegram' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_on_telegram' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if settings.share_email -%}
+            <li class="list-social__item">
+              <a
+                class="list-social__link link link--text link-with-icon"
+                href="mailto:?&subject={{ share_title | url_param_escape }}&body={{ share_link }}"
+              >
+                {% render 'icon-brand', icon: 'envelope' %}
+                <span class="visually-hidden" aria-hidden="true">{{ 'general.social.alt_text.share_by_email' | t }}</span>
+                <span class="visually-hidden visually-hidden--inline">{{ 'accessibility.link_messages.new_window' | t }}</span>
+              </a>
+            </li>
+          {%- endif -%}
+        </ul>        
+      </div>
+    </div>
+  </details>
+</share-button>
+{{ 'component-share-button.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'share.js' | asset_url }}" defer="defer"></script>

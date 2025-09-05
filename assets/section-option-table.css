@@ -1,0 +1,344 @@
+option-table div {
+  font-family: museo-sans, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+option-table .data-headers div,
+option-table .data-checks div:first-child {
+  font-family: museo-sans, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+option-table {
+  padding-bottom: 0.2rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+option-table .wrapper {
+  transition: all 0.4s ease-in-out;
+}
+
+option-table .container {
+  padding-top: 3rem;
+}
+
+option-table h2 {
+  margin: 0px 0px -20px 0px;
+}
+
+option-table div {
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+}
+
+option-table .data-headers div.blank,
+option-table .data-checks div:first-child.blank {
+  background-color: transparent;
+}
+
+option-table .ot--images,
+option-table .ot--data,
+option-table .data-row {
+  width: 100%;
+  float: left;
+}
+
+option-table .ot--images > div {
+  margin-right: 15px;
+  margin-bottom: 10px;
+  position: relative;
+  transition: all 0.1s ease-in-out;
+}
+
+option-table .ot--images > div img {
+  height: 30rem;
+  width: auto;
+  max-width: none;
+}
+
+option-table .ot--images > div:last-child {
+  margin-right: 0px;
+}
+
+option-table .ot--images > div:first-child {
+  margin-left: -10px;
+}
+
+option-table .data-row > div {
+  width: 9.09%;
+  float: left;
+}
+
+option-table .data-checks div a {
+  text-decoration: none;
+  color: #373737;
+}
+
+option-table .ot--images > div img {
+  margin-right: -88px;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.4s;
+}
+
+option-table .ot--option-row .icon {
+  width: 1.5rem;
+}
+
+option-table .data-row > div:first-child {
+  flex-basis: 200px;
+  overflow: hidden;
+  flex-grow: 0;
+}
+
+option-table .data-row div {
+  flex-grow: 1;
+  flex-basis: 0;
+  word-break: break-word;
+  min-height: 40px;
+  font-size: 12.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.2rem;
+  border-radius: var(--section-border-radius);
+}
+
+option-table .checkmark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 3;
+  stroke: rgb(var(--color-border));
+  stroke-miterlimit: 10;
+}
+
+option-table .checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  fill: none;
+  stroke: none;
+}
+
+option-table .checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  filter: brightness(0.8);
+}
+
+use-animate[animate] option-table .checkmark__circle {
+  animation-delay: 0.4s;
+  animation: ot-stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+use-animate[animate] option-table .checkmark__check {
+  animation-delay: 0.4s;
+  animation: ot-stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes ot-stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+use-animate:not([animate]) option-table div#imageRow01 img,
+use-animate:not([animate]) option-table div#imageRow02 img,
+use-animate:not([animate]) option-table div#imageRow03 img,
+use-animate:not([animate]) option-table div#imageRow04 img,
+use-animate:not([animate]) option-table div#imageRow05 img {
+  opacity: 0;
+}
+
+use-animate option-table div#imageRow02 img {
+  transition-delay: 0.4s;
+}
+use-animate option-table div#imageRow03 img {
+  transition-delay: 0.7s;
+}
+use-animate option-table div#imageRow04 img {
+  transition-delay: 0.9s;
+}
+use-animate option-table div#imageRow05 img {
+  transition-delay: 1s;
+}
+
+option-table .data-headers div,
+option-table .data-row > div:not(.blank):first-child {
+  background: rgb(var(--color-border));
+}
+
+option-table .data-checks.active div {
+  background: rgb(var(--color-highlight));
+  border-color: rgb(var(--color-border));
+}
+
+option-table .data-checks.active div,
+option-table .data-row.active > div:not(.blank):first-child {
+  background: rgb(var(--color-highlight));
+}
+
+option-table .data-checks div {
+  position: relative;
+}
+option-table .data-checks div:nth-child(n + 2):before {
+  content: "";
+  position: absolute;
+  bottom: -0.25rem;
+  height: 0.1rem;
+  width: 100%;
+  background-color: rgb(var(--color-border));
+}
+
+option-table .data-checks.active .checkmark__check {
+  filter: brightness(0.4);
+}
+option-table .data-checks.active .checkmark__circle {
+  fill: #fff;
+}
+
+option-table .ot--images .is-faux svg {
+  width: 20rem;
+  background-color: #f3f3f3;
+}
+
+option-table .data-header {
+  grid-gap: 0.7rem;
+}
+
+option-table .data-header img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+@media only screen and (min-width: 750px) {
+  option-table .data-row {
+    display: flex;
+  }
+  .option-table .button {
+    margin-top: 1.3rem;
+  }
+  option-table .container {
+    max-width: 120rem;
+    margin: auto;
+    display: block;
+  }
+  option-table .data-checks.is-faux .is-header span {
+    width: 80%;
+    height: 20%;
+    background: #dddddd;
+    position: absolute;
+    top: 40%;
+    left: 10%;
+  }
+}
+
+@media only screen and (max-width: 749px) {
+  option-table .ot--option-row a {
+    text-decoration: none !important;
+  }
+
+  option-table .ot--images > div {
+    width: calc((100vw - 5rem) / var(--number-of-blocks));
+    margin-right: 0;
+  }
+
+  option-table .ot--images > div img {
+    margin-right: 0px;
+  }
+
+  option-table .ot--images > div:first-child {
+    margin-left: 0;
+  }
+
+  option-table .data-row.data-headers div.active {
+    background-color: rgb(var(--color-highlight));
+  }
+
+  option-table .data-headers {
+    display: flex;
+  }
+  option-table .data-headers > div:first-child {
+    display: none;
+  }
+
+  option-table .data-checks {
+    display: flex;
+    opacity: 0;
+    transform: translateY(100%);
+    transition-duration: var(--duration-long);
+    transition-timing-function: ease;
+    transition-property: opacity, transform;
+    position: absolute;
+    pointer-events: none;
+  }
+  option-table .data-checks > div:not(.is-header) {
+    display: none;
+  }
+  option-table .data-checks.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  option-table .data-row.data-checks > div:first-child {
+    flex-basis: 100%;
+  }
+
+  option-table .data-checks div {
+    background-color: rgb(var(--color-border));
+  }
+
+  option-table .data-checks .checkmark__check {
+    filter: brightness(0.4);
+  }
+
+  option-table .ot--images > div img {
+    width: calc((100vw - 5rem) / var(--number-of-blocks));
+    height: unset;
+  }
+
+  option-table .ot--option-row-desc {
+    position: absolute;
+    width: 100%;
+    inset-inline-start: 0;
+    inset-block-start: -7rem;
+  }
+  option-table .ot--images > div {
+    position: unset;
+  }
+  option-table .ot--images {
+    position: relative;
+  }
+  option-table .ot--data {
+    min-height: 8.8rem;
+  }
+
+  option-table .data-checks .is-header a {
+    display: flex;
+    column-gap: 0.4rem;
+    width: 100%;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+  }
+  .option-table use-animate {
+    line-height: initial;
+  }
+  option-table .ot--images .is-faux svg {
+    width: auto;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  option-table .wrapper {
+    max-height: initial;
+  }
+}

@@ -1,0 +1,21 @@
+# we use Shopify as our ecommerce platform
+{%- comment -%}
+# Caution! Please read https://help.shopify.com/en/manual/promoting-marketing/seo/editing-robots-txt before proceeding to make changes to this file.
+{% endcomment %}
+User-agent: *
+Disallow: /policies/terms-of-service
+{% for group in robots.default_groups %}
+  {{- group.user_agent -}}
+
+  {% for rule in group.rules %}
+    {{- rule -}}
+  {% endfor %}
+  {%- for rule in group.rules -%}
+    {%- unless rule.directive == 'Disallow' and rule.value == '/policies/terms-of-service' -%}
+      {{ rule }}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- if group.sitemap != blank -%}
+    {{ group.sitemap }}
+  {%- endif -%}
+{% endfor %}

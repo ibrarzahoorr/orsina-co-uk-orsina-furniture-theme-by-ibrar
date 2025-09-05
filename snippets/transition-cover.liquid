@@ -1,0 +1,125 @@
+{%- comment -%}
+  Header logo splash:
+  - Page transition bar ke bajaye same header logo ko pop-in dikhata hai.
+  - Header me jo IMG/SVG/picture dikh raha hoga, usi ko clone karke yahan render karta hai.
+{%- endcomment -%}
+
+{%- if settings.page_transition_enabled -%}
+  <style>
+    .no-js .transition-cover{display:none}
+    .transition-cover{
+      position:fixed; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      background-color:rgb(var(--color-background));
+      z-index:1000;
+      pointer-events:none;
+      transition:opacity var(--duration-default) ease,visibility var(--duration-default) ease
+    }
+    .loaded .transition-cover{opacity:0;visibility:hidden}
+    .unloading .transition-cover{opacity:1;visibility:visible}
+
+    .splash-logo{
+      max-width:min(220px,60vw);
+      max-height:120px;
+      opacity:0; transform:scale(.92);
+      will-change:transform,opacity
+    }
+    .logo-anim .splash-logo{animation:splash-in .35s ease-out both}
+    @keyframes splash-in{
+      from{opacity:0;transform:scale(.92)}
+      60%{opacity:1;transform:scale(1.02)}
+      to{opacity:1;transform:scale(1)}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .logo-anim .splash-logo{animation-duration:1ms}
+      .transition-cover{transition-duration:1ms}
+    }
+  </style>
+
+  <div class="transition-cover" aria-hidden="true">
+    <!-- JS yahan header ka logo inject karega -->
+    <span id="splash-slot" class="splash-logo"></span>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      // -- Helper: header logo dhundo (common selectors)
+      function findHeaderLogoEl() {
+        var sels = [
+          'header .header__heading-logo img',
+          'header .header__heading-logo svg',
+          'header .site-header__logo img',
+          'header .site-header__logo svg',
+          'header a.header__heading-link img',
+          'header a.header__heading-link svg',
+          'header picture img' // picture ke andar ka img
+        ];
+        for (var i = 0; i < sels.length; i++) {
+          var el = document.querySelector(sels[i]);
+          if (el) return el;
+        }
+        return null;
+      }
+
+      // -- Helper: clone visible logo -> splash
+      function injectSplashLogo() {
+        var slot = document.getElementById('splash-slot');
+        if (!slot) return;
+
+        var srcEl = findHeaderLogoEl();
+        if (!srcEl) {
+          // Fallback: shop name text
+          slot.textContent = {{ shop.name | json }};
+          slot.style.font = '600 22px/1.1 var(--font-body-family)';
+          slot.style.opacity = '1';
+          return;
+        }
+
+        var node;
+        if (srcEl.tagName.toLowerCase() === 'img') {
+          node = document.createElement('img');
+          // currentSrc handles <picture> srcset choice
+          node.src = srcEl.currentSrc || srcEl.src;
+          if (srcEl.srcset) node.srcset = srcEl.srcset;
+          if (srcEl.sizes) node.sizes = srcEl.sizes;
+          node.alt = srcEl.alt || {{ shop.name | json }};
+          node.decoding = 'async';
+          node.loading = 'eager';
+          // dimensions (optional)
+          if (srcEl.width) node.width = srcEl.width;
+          if (srcEl.height) node.height = srcEl.height;
+        } else {
+          // svg or any other element -> deep clone
+          node = srcEl.cloneNode(true);
+        }
+
+        node.classList.add('splash-logo');
+        slot.replaceWith(node);
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        // make visible
+        root.classList.add('unloading');
+        // inject the exact same header logo
+        injectSplashLogo();
+        // next frame -> animate
+        requestAnimationFrame(function () {
+          root.classList.add('logo-anim');
+        });
+        // hide fast (match .35s)
+        setTimeout(function () {
+          root.classList.add('loaded');
+          root.classList.remove('unloading');
+        }, 380);
+      });
+
+      // optional: page leave
+      window.addEventListener('beforeunload', function () {
+        root.classList.remove('loaded');
+        root.classList.add('unloading');
+      });
+    })();
+  </script>
+{%- endif -%}

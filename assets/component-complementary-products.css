@@ -1,0 +1,120 @@
+.complementary-products li + li {
+  margin-top: 2rem;
+}
+
+.complementary-products .card__badge {
+  display: none;
+}
+
+.complementary-products .card-wrapper {
+  display: flex;
+}
+
+.complementary-products .card {
+  width: 7rem;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: min(var(--card-radius),0.3rem);
+}
+
+.complementary-products .card__media {
+  background: none;
+  padding-bottom: 0;
+}
+
+.complementary-products .card + .card-information {
+  flex: 1 1 auto;
+  padding-top: 0;
+  padding-inline-start: 2rem;
+  flex-direction: column;
+}
+
+.complementary-products .product__accordion > .summary__title {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.accordion + .complementary-products .accordion,
+.complementary-products.is-accordion + .accordion {
+  margin-top: 0;
+  border-top: 0;
+}
+
+.complementary-products:not(.is-accordion) .accordion {
+  border-bottom: 0;
+}
+
+.complementary-products:not(.is-accordion) .accordion__content {
+  padding-bottom: 0;
+}
+
+.complementary-products .card-information__wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.complementary-products .card-information__wrapper > *:not(.visually-hidden:first-child) + * {
+  margin-top: 0;
+}
+
+.complementary-products .card-information__button {
+  position: relative;
+  height: 100%;
+  bottom: 0;
+  flex-direction: column;
+  row-gap: 5rem;
+  transform: none;
+}
+
+.complementary-products .card-information__button add-to-cart {
+  display: inline-flex;
+  width: max-content;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 750px) {
+  .complementary-products .card-information__button .button {
+    transform: none;
+    max-width: max-content;
+  }
+
+  .complementary-products .card-information__button .button.loading {
+    padding-right: 2.5rem;
+  }
+}
+
+@media screen and (hover: none) and (max-width: 1366px), screen and (max-width: 749px) {
+  .complementary-products .card+.card-information {
+    padding-inline-start: 1.5rem;
+    justify-content: flex-start;
+  }
+
+  .complementary-products .card-information__button .button {
+    width: 3.6rem;
+    height: 3.6rem;
+    justify-content: center;
+    box-shadow: inset 0 0 0 0.1rem rgb(var(--color-border));
+    border-radius: 0;
+  }
+
+  .complementary-products .card-information__button .button.loading:after {
+    left: 50%;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1rem;
+    margin-left: -1rem;
+  }
+
+  .complementary-products .card-information__button .button--cta:not(.loading):before,
+  .complementary-products .card-information__button .button--cta:not(.loading):after {
+    display: none;
+  }
+}
+
+.complementary-products .price bdi {
+  font-size: calc(var(--font-price-scale) * 1.4rem);
+}

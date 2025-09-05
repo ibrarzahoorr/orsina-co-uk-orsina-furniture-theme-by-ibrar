@@ -1,0 +1,1083 @@
+{%- assign text_direction = 'localization.text_direction_trigger' | t | downcase -%}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}"
+  {%- if text_direction == 'rtl' %} dir="rtl"{% endif -%}
+>
+  <head>
+ {%- render 'ecom_header' -%}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <meta name="google-site-verification" content="RM8cCNg1zcq2rOEzroFlzSVv1kihc3ZcQOV3yzcf5JE" />
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M6XM24PT');</script>
+<!-- End Google Tag Manager -->
+    
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <meta name="msvalidate.01" content="82B3573226AE640542FE42D055635B6" />
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+    <meta name="google-site-verification" content="Cqi_Sa43Cdge2vGwQSa7GJZv7Jb6NYDqht_ST5B9ID4" />
+    <script src="{{ 'vendor-v4.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script crossorigin="anonymous" src="{{ 'modules-basis.js' | asset_url }}" defer="defer"></script>
+
+    {{ content_for_header }}
+
+    {%- liquid
+      render 'css-variables'
+      echo 'base.css' | asset_url | stylesheet_tag: preload: true
+      
+      if text_direction == 'rtl'
+        echo 'rtl.css' | asset_url | stylesheet_tag
+      endif
+    -%}
+
+    <link rel="stylesheet" href="{{ 'apps.css' | asset_url }}" media="print" fetchpriority="low" onload="this.media='all'">
+
+    {%- unless settings.type_body_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    
+    {%- if settings.predictive_search_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+    {%- if settings.quick_view_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-quick-view.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+    {%- if settings.color_swatches_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-color-swatches.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+    {%- if linklists.gift-wrapping.links != blank and linklists.gift-wrapping.links.first.type == 'product_link' -%}
+      <link rel="stylesheet" href="{{ 'component-gift-wrapping.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript>{{ 'component-gift-wrapping.css' | asset_url | stylesheet_tag }}</noscript>
+    {%- endif -%}
+
+    {%- render 'js-variables' -%}
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0VQ9YSC07S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-0VQ9YSC07S');
+</script>
+
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '3414485338688940');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=3414485338688940&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<style>
+  @keyframes bounce { from { transform: translateY(0px);} to { transform: translateY(-10px);} }
+  @-webkit-keyframes salePulse {
+    from { background-color: #a85a3b; }
+    50%  { background-color: #800020; -webkit-transform: scale(1.1); }
+    to   { background-color: #a85a3b; }
+  }
+  ul.list-menu.list-menu--inline> li:nth-last-child(2) {
+    background: #a85a3b; display:block; width:50px; text-align:center; border-radius:3em;
+    color:#fff; font-weight:bold; -webkit-animation-name:salePulse; -webkit-animation-duration:1s;
+    -webkit-animation-iteration-count: infinite; margin:0 auto; animation:bounce 300ms alternate infinite cubic-bezier(.2,.65,.6,1);
+  }
+  ul.list-menu.list-menu--inline> li:nth-last-child(2):hover { animation-play-state: paused; }
+  ul.list-menu.list-menu--inline> li:nth-last-child(2) a { color:#fff !important; }
+
+  /* Swym hearts: outline by default */
+  .swym-wishlist-collections-v2 svg use,
+  .swym-add-to-wishlist svg use { fill: none; stroke: currentColor; stroke-width: 1.7; }
+
+  /* Swym hearts: filled when pressed */
+  .swym-wishlist-collections-v2[aria-pressed="true"] svg use,
+  .swym-add-to-wishlist[aria-pressed="true"] svg use { fill: currentColor; stroke: currentColor; }
+
+  /* Theme color for hearts */
+  .swym-wishlist-collections-v2 svg,
+  .swym-add-to-wishlist svg { color: #a85a3b; }
+
+  /* Inline SVG heart support (we add .is-filled on click) */
+  svg.inline-heart-add.is-filled path,
+  svg.is-filled path { fill:#a85a3b !important; stroke:#a85a3b !important; }
+
+  /* Ensure sprite use for #icon-heart looks themed */
+  svg use[href="#icon-heart"] { stroke:#a85a3b; fill:none; }
+
+  /* Wishlist page: trash/remove icon theme color */
+  body.template-page.page-swym-wishlist .swym-storefront-layout-action-tooltip-btn svg path {
+    fill:#a85a3b !important; stroke:#a85a3b !important;
+  }
+
+  /* Badge hide utility */
+  .wishlist-count[hidden] { display: none !important; }
+
+  /* Header link positioning for badge */
+  a.header__icon.has-wishlist-badge,
+  a.header__icon[aria-label^="Wishlist"],
+  a.header__icon[title^="Wishlist"],
+  a.header__icon[href*="wishlist"] {
+    position: relative;
+  }
+
+  /* Badge strong selector */
+  a.header__icon.has-wishlist-badge > .wishlist-count,
+  a.header__icon[aria-label^="Wishlist"] > .wishlist-count,
+  a.header__icon[title^="Wishlist"] > .wishlist-count,
+  a.header__icon[href*="wishlist"] > .wishlist-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1;
+    white-space: nowrap;
+    background: #a85a3b;
+    color: #fff;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  @media (max-width: 480px) {
+    a.header__icon.has-wishlist-badge > .wishlist-count,
+    a.header__icon[aria-label^="Wishlist"] > .wishlist-count,
+    a.header__icon[title^="Wishlist"] > .wishlist-count,
+    a.header__icon[href*="wishlist"] > .wishlist-count {
+      top: -4px;
+      right: -4px;
+      min-width: 16px;
+      height: 16px;
+      font-size: 11px;
+    }
+  }
+
+  /* ---- Minimal cart-count bubble in case theme lacks one ---- */
+  a.header__icon[href*="/cart"] { position: relative; }
+  .cart-count-bubble {
+    position: absolute; top: -6px; right: -6px;
+    min-width: 18px; height: 18px; line-height: 18px;
+    padding: 0 5px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; text-align: center;
+    background: #a85a3b; color: #fff; z-index: 2;
+  }
+
+
+
+
+
+
+
+
+
+
+  /* Drawer open hone par ancestors par lage transforms ko neutralize karo */
+html.is-drawer-open .transition-body,
+html.is-drawer-open .transition-content {
+  transform: none !important;
+}
+
+/* Body scroll lock – page freeze ki jagah controlled lock */
+html.is-drawer-open,
+html.is-drawer-open body {
+  overflow: hidden;
+  height: 100%;
+}
+
+/* iOS viewport quirk fix (100dvh preferred, fallback 100vh) */
+cart-drawer, cart-notification {
+  height: 100dvh;
+  height: 100vh;
+}
+
+
+
+
+
+</style>
+
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "r5n66fd3zq");
+</script>
+
+<!-- Metricool Tracking Script (HEAD) -- FIXED URL -->
+<script>
+function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"8711f68830983b188c2b19dbf359784a"})});
+</script>
+
+  </head>
+
+  <body class="template-{{ request.page_type }}{% if request.design_mode %} shopify-design-mode{% endif %}"
+    {%- if settings.image_zoom_effect_enabled %} data-animate-image{% endif -%}
+    {%- if settings.image_loading_bar_enabled %} data-lazy-image{% endif -%}
+    {%- if settings.heading_capitalize %} data-heading-capitalize{% endif -%}
+    {%- if settings.heading_center %} data-heading-center{% endif -%}
+    {%- if settings.price_superscript %} data-price-superscript{% endif -%}
+    {%- if settings.button_corner_radius > 0 %} data-button-round{% endif -%}
+  >
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6XM24PT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    
+    <a class="skip-to-content-link button button--small visually-hidden" href="#MainContent">
+      {{ "accessibility.skip_to_text" | t }}
+    </a>
+
+    {% render 'transition-cover' %}
+
+    <div class="transition-body">
+      {% sections 'header-group' %}
+
+      <div class="transition-content">
+        <main id="MainContent" class="content-for-layout focus-none shopify-section" role="main" tabindex="-1">
+          {{ content_for_layout }}
+        </main>
+
+        {% sections 'footer-group' %}
+      </div>
+    </div>
+
+    {% sections 'overlay-group' %}
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+    </ul>
+    <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
+      <symbol id="icon-cart" fill="none" viewBox="0 0 18 19"><!-- fixed viewBox -->
+        <path d="M3.09333 5.87954L16.2853 5.87945V5.87945C16.3948 5.8795 16.4836 5.96831 16.4836 6.07785V11.4909C16.4836 11.974 16.1363 12.389 15.6603 12.4714C11.3279 13.2209 9.49656 13.2033 5.25251 13.9258C4.68216 14.0229 4.14294 13.6285 4.0774 13.0537C3.77443 10.3963 2.99795 3.58502 2.88887 2.62142C2.75288 1.42015 0.905376 1.51528 0.283581 1.51478" stroke="currentColor"/>
+        <path d="M13.3143 16.8554C13.3143 17.6005 13.9183 18.2045 14.6634 18.2045C15.4085 18.2045 16.0125 17.6005 16.0125 16.8554C16.0125 16.1104 15.4085 15.5063 14.6634 15.5063C13.9183 15.5063 13.3143 16.1104 13.3143 16.8554Z" fill="currentColor"/>
+        <path d="M3.72831 16.8554C3.72831 17.6005 4.33233 18.2045 5.07741 18.2045C5.8225 18.2045 6.42651 17.6005 6.42651 16.8554C6.42651 16.1104 5.8225 15.5063 5.07741 15.5063C4.33233 15.5063 3.72831 16.1104 3.72831 16.8554Z" fill="currentColor"/>
+      </symbol>
+    </svg>
+
+    {%- if settings.image_loading_bar_enabled -%}
+      <script src="{{ 'lazyimage.js' | asset_url }}" async></script>
+    {%- endif -%}
+    {%- if settings.predictive_search_enabled -%}
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if settings.quick_view_enabled -%}
+      <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if settings.color_swatches_enabled -%}
+      <script src="{{ 'color-swatches.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    {%- if linklists.gift-wrapping.links != blank and linklists.gift-wrapping.links.first.type == 'product_link' -%}
+      <script src="{{ 'gift-wrapping.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+  {%- render "ecom_footer"-%}
+
+  <!-- ✅ Wishlist badge + PDP/SVG/Collections logic (Swym) — paste just before </body> -->
+<script>
+(function () {
+  const STORAGE_KEY = 'swymWishlistCountDisplay';
+  const THEME_HEX = '#a85a3b';
+  const THEME_RGB = 'rgb(168, 90, 59)';
+
+  /* ----------------- Header link & badge helpers ----------------- */
+  function getHeaderLink() {
+    return document.querySelector('a.header__icon[aria-label^="Wishlist"]')
+        || document.querySelector('a.header__icon[title^="Wishlist"]')
+        || document.querySelector('a.header__icon[href*="wishlist"]');
+  }
+
+  function ensureBadge() {
+    const link = getHeaderLink();
+    if (!link) return null;
+
+    let badge = link.querySelector('.wishlist-count');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'wishlist-count';
+      badge.hidden = true;                   // zero par hidden
+      badge.textContent = '0';
+
+      // minimal fallback styling — CSS load se pehle bhi visible rahe
+      if (getComputedStyle(link).position === 'static') link.style.position = 'relative';
+      Object.assign(badge.style, {
+        position:'absolute', top:'-6px', right:'-6px',
+        minWidth:'18px', height:'18px', lineHeight:'18px',
+        padding:'0 5px', borderRadius:'9px',
+        fontSize:'12px', fontWeight:'600', textAlign:'center',
+        background: THEME_HEX, color:'#fff', zIndex:'2', pointerEvents:'none'
+      });
+
+      link.appendChild(badge);
+      link.classList.add('has-wishlist-badge');
+    }
+    return badge;
+  }
+
+  function storeCount(n){ try { localStorage.setItem(STORAGE_KEY, String(Math.max(0, Number(n)||0))); } catch(e){} }
+  function readStoredCount(){
+    try { const v = parseInt(localStorage.getItem(STORAGE_KEY)||'0', 10); return isNaN(v) ? 0 : v; }
+    catch(e){ return 0; }
+  }
+
+  function drawBadge(n, {persist=true} = {}) {
+    const b = ensureBadge();
+    if (!b) return;
+    n = Math.max(0, Number(n)||0);
+    if (n > 0) { b.textContent = n > 9 ? '9+' : String(n); b.hidden = false; }
+    else { b.textContent = '0'; b.hidden = true; }
+    const parent = b.closest('a,button') || b;
+    parent.setAttribute('aria-label', n > 0 ? `Wishlist (${n})` : 'Wishlist');
+    parent.setAttribute('title',     n > 0 ? `Wishlist (${n})` : 'Wishlist');
+    if (persist) storeCount(n);
+  }
+
+  function getBadgeCount() {
+    const b = ensureBadge();
+    if (!b || b.hidden) return 0;
+    const n = parseInt((b.textContent || '0').replace('+',''), 10);
+    return isNaN(n) ? 0 : n;
+  }
+
+  /* ----------------- Swym: source of truth ----------------- */
+  function fetchWishlistCount() {
+    if (!window._swat || !window._swat.fetchWrtEventTypeET) return;
+    window._swat.fetchWrtEventTypeET({ et: 5 }, function(items) {
+      drawBadge(items ? items.length : 0);
+    });
+  }
+
+  function onSwymReady() {
+    fetchWishlistCount();
+    if (window._swat && window._swat.on) {
+      try {
+        window._swat.on('wishlistUpdated', fetchWishlistCount);
+        window._swat.on('item-added',      fetchWishlistCount);
+        window._swat.on('item-removed',    fetchWishlistCount);
+      } catch(e){}
+    }
+  }
+
+  /* ----------------- Detect if Swym popup just opened ----------------- */
+  function detectSwymPopupOpening(callback) {
+    const appearsOpen = () => {
+      const el = document.querySelector(
+        '.swym-ui, .swym-modal, .swym-wishlist-modal, .swym-overlay, [role="dialog"][class*="swym"]'
+      );
+      return !!(el && getComputedStyle(el).display !== 'none' && el.offsetParent !== null);
+    };
+    if (appearsOpen()) { callback(true); return; }
+
+    let opened = false;
+    const obs = new MutationObserver(() => {
+      if (appearsOpen()) { opened = true; obs.disconnect(); callback(true); }
+    });
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+
+    // 400ms window: if nothing appears, assume no popup
+    setTimeout(() => { if (!opened) { obs.disconnect(); callback(false); } }, 400);
+  }
+
+  /* ----------------- Helpers to avoid false-positives ----------------- */
+  function classString(el){
+    if (!el) return '';
+    const c = el.className;
+    return typeof c === 'string' ? c : (c && c.baseVal) ? c.baseVal : '';
+  }
+
+  function isCloseControl(target) {
+    const node = (target.closest && target.closest('button, a, [role="button"], svg')) || target;
+    if (!node) return false;
+
+    const ariaHiddenTrue = node.closest('[aria-hidden="true"]');
+    if (ariaHiddenTrue && node.closest('svg')) return true; // hidden SVGs
+
+    const label = (node.getAttribute && (node.getAttribute('aria-label') || node.getAttribute('title'))) || '';
+    const titleEl = node.querySelector && node.querySelector('title');
+    const titleTxt = titleEl ? (titleEl.textContent || '') : '';
+    const idTxt = (node.id || '');
+    const cls = classString(node);
+
+    const haystack = [label, titleTxt, idTxt, cls].join(' ').toLowerCase();
+
+    // common “close” keywords & klaviyo classes
+    if (/(^|\s)(close|dismiss|cancel|cross|x)(\s|$)/i.test(haystack)) return true;
+    if (/klaviyo/.test(haystack) && /close/.test(haystack)) return true;
+    if (/title-?close-?dialog/i.test(haystack)) return true;
+
+    return false;
+  }
+
+  function attrColor(el, attr) {
+    const v = (el.getAttribute && el.getAttribute(attr)) || '';
+    return (v || '').trim().toLowerCase();
+  }
+
+  function isThemeColor(val) {
+    if (!val) return false;
+    const v = val.replace(/\s+/g,'').toLowerCase();
+    return v.includes(THEME_HEX) || v.includes(THEME_RGB);
+  }
+
+  function svgLooksLikeHeart(svg) {
+    // Heuristic: treat as our heart only if path uses theme color
+    const path = svg && svg.querySelector && svg.querySelector('path');
+    if (!path) return false;
+    const stroke = attrColor(path, 'stroke');
+    const fill   = attrColor(path, 'fill');
+    const cssColor = getComputedStyle(svg).color.toLowerCase();
+    return isThemeColor(stroke) || isThemeColor(fill) || isThemeColor(cssColor);
+  }
+
+  /* ----------------- Identify inline SVG heart (outline/filled) ----------------- */
+  function classifyInlineSvgHeart(el) {
+    const svg = el.closest && el.closest('svg');
+    if (!svg) return null;
+
+    // Ignore header icon
+    const header = getHeaderLink();
+    if (header && header.contains(svg)) return null;
+
+    // Ignore explicit close controls
+    if (isCloseControl(svg)) return null;
+
+    // Only treat as heart if it uses our theme color
+    if (!svgLooksLikeHeart(svg)) return null;
+
+    const path = svg.querySelector('path');
+    if (!path) return null;
+
+    const fill = (attrColor(path, 'fill') || '');
+    // outline heart => ADD, filled heart => REMOVE
+    if (fill === '' || fill === 'none' || fill === 'transparent') return 'add';
+    return 'remove';
+  }
+
+  /* ----------------- Click handling ----------------- */
+  document.addEventListener('click', function(e){
+    // 0) Global guard: ignore any Close/Dismiss/Cross clicks
+    if (isCloseControl(e.target)) return;
+
+    const headerLink = getHeaderLink();
+    if (headerLink && e.target && headerLink.contains(e.target)) {
+      return; // header -> navigation only
+    }
+
+    /* 1) PDP button (#swym-vs-add-to-wishlist-single) */
+    const pdpBtn = e.target.closest && e.target.closest('#swym-vs-add-to-wishlist-single.swym-add-to-wishlist-single');
+    if (pdpBtn) {
+      const text      = (pdpBtn.textContent || '').trim().toLowerCase();
+      const inListCls = pdpBtn.classList.contains('variant-in-wishlist');
+      const isRemove  = inListCls || /remove\s*from\s*list/i.test(text);
+      const isAdd     = !inListCls && /add\s*to\s*list/i.test(text);
+      if (isAdd)    drawBadge(getBadgeCount() + 1);
+      if (isRemove) drawBadge(Math.max(0, getBadgeCount() - 1));
+      return;
+    }
+
+    /* 2) Collections heart button (.swym-wishlist-collections-v2) with popup gating */
+    const colBtn = e.target.closest && e.target.closest('button.swym-wishlist-collections-v2');
+    if (colBtn) {
+      const pressed = String(colBtn.getAttribute('aria-pressed')).toLowerCase() === 'true';
+      const deltaIfNoPopup = pressed ? -1 : +1;
+
+      const al = (colBtn.getAttribute('aria-label') || '').toLowerCase();
+      const likelyOpener = /view\s*wishlist/.test(al) || /open/.test(al);
+
+      detectSwymPopupOpening(function(opened){
+        if (!opened && !likelyOpener) {
+          drawBadge(Math.max(0, getBadgeCount() + deltaIfNoPopup));
+        }
+      });
+      return;
+    }
+
+    /* 3) Raw inline SVG hearts (theme-colored) with popup gating */
+    const classification = classifyInlineSvgHeart(e.target);
+    if (classification === 'add' || classification === 'remove') {
+      const delta = classification === 'add' ? +1 : -1;
+      // Agar click se popup open ho raha hai -> NO counter change
+      detectSwymPopupOpening(function(opened){
+        if (!opened) {
+          drawBadge(Math.max(0, getBadgeCount() + delta));
+        }
+      });
+      return;
+    }
+
+    /* 4) Generic Swym add triggers (excluding collections button) */
+    const addBtn = e.target.closest &&
+      e.target.closest('[data-swaction="addToWishlist"], .swym-add-to-wishlist-single');
+    if (addBtn && !addBtn.closest('.swym-wishlist-collections-v2')) {
+      drawBadge(getBadgeCount() + 1);
+      const svg = e.target.closest && e.target.closest('svg');
+      if (svg) svg.classList.add('is-filled');
+      return;
+    }
+
+    /* 5) Wishlist page remove control */
+    const removeBtn = e.target.closest &&
+      e.target.closest('.swym-storefront-layout-action-tooltip-btn.remove-from-list-button');
+    if (removeBtn) {
+      drawBadge(Math.max(0, getBadgeCount() - 1));
+      return;
+    }
+  });
+
+  /* ----------------- First paint ----------------- */
+  document.addEventListener('DOMContentLoaded', function(){
+    ensureBadge();
+    const saved = readStoredCount();
+    if (saved > 0) {
+      drawBadge(saved, {persist:false}); // prepaint; Swym sync will correct
+    }
+  });
+
+  // Swym lifecycle
+  window.SwymCallbacks = window.SwymCallbacks || [];
+  window.SwymCallbacks.push(onSwymReady);
+})();
+</script>
+
+<!-- ✅ CART: realtime count + open drawer on add-to-cart -->
+<script>
+(function(){
+  const SECTION_KEYS = ['cart-icon-bubble', 'cart-drawer']; // adjust if your theme uses different handles
+
+  // Ensure a cart bubble exists in header with a default 0
+  function ensureCartBubble() {
+    // Try common header cart link selectors
+    const link = document.querySelector('a.header__icon[href*="/cart"]')
+              || document.querySelector('a.header__icon[aria-label^="Cart"]');
+    if (!link) return null;
+
+    let bubble = link.querySelector('.cart-count-bubble');
+    if (!bubble) {
+      bubble = document.createElement('span');
+      bubble.className = 'cart-count-bubble';
+      bubble.innerHTML = '<span class="text">0</span>';
+      if (getComputedStyle(link).position === 'static') link.style.position = 'relative';
+      link.appendChild(bubble);
+    } else if (!bubble.querySelector('.text')) {
+      const span = document.createElement('span');
+      span.className = 'text';
+      span.textContent = (bubble.textContent || '0').trim() || '0';
+      bubble.textContent = '';
+      bubble.appendChild(span);
+    }
+    link.setAttribute('aria-label', 'Cart (0)');
+    link.setAttribute('title', 'Cart (0)');
+    return bubble;
+  }
+
+  function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+  function setCartCount(n){
+    const num = Number(n)||0;
+    // Our ensured bubble + any theme bubbles
+    $all('.cart-count-bubble .text').forEach(el => el.textContent = String(num));
+    // A11y labels on common header link
+    const link = document.querySelector('a.header__icon[href*="/cart"]')
+              || document.querySelector('a.header__icon[aria-label^="Cart"]');
+    if (link) {
+      link.setAttribute('aria-label', `Cart (${num})`);
+      link.setAttribute('title', `Cart (${num})`);
+    }
+  }
+
+  async function fetchCartCount(){
+    try {
+      const cart = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } }).then(r=>r.json());
+      setCartCount(cart.item_count || 0);
+      return cart.item_count || 0;
+    } catch(e){ return 0; }
+  }
+
+  async function refreshSections(){
+    try{
+      const res = await fetch('/?sections=' + SECTION_KEYS.join(','), { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('sections fetch failed');
+      const json = await res.json();
+      const parser = new DOMParser();
+      SECTION_KEYS.forEach(key=>{
+        const html = json[key];
+        if (!html) return;
+        const doc = parser.parseFromString(html, 'text/html');
+        const fresh = doc.getElementById('shopify-section-' + key);
+        const live  = document.getElementById('shopify-section-' + key);
+        if (fresh && live) live.replaceWith(fresh);
+      });
+    } catch(e){ /* ignore */ }
+  }
+
+  function openDrawer(){
+    const drawer = document.querySelector('cart-drawer, cart-notification');
+    if (drawer) {
+      if (typeof drawer.open === 'function') drawer.open();
+      else {
+        drawer.classList.add('is-active');
+        drawer.setAttribute('open','');
+      }
+    } else {
+      // fallback (disabled by default)
+      // window.location.href = '/cart';
+    }
+  }
+
+  async function addToCart(variantId, qty){
+    const body = JSON.stringify({ items: [{ id: Number(variantId), quantity: Number(qty||1) }] });
+    const res = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body
+    });
+    if (!res.ok) throw new Error('Add to cart failed');
+    return res.json();
+  }
+
+  document.addEventListener('DOMContentLoaded', async function(){
+    ensureCartBubble();     // show 0 by default
+    await fetchCartCount(); // sync to real value
+  });
+
+  document.addEventListener('click', async function(e){
+    const btn = e.target.closest && e.target.closest('add-to-cart[data-variant-id]');
+    if (!btn) return;
+
+    e.preventDefault();
+    if (btn.dataset.loading === '1') return;
+    btn.dataset.loading = '1';
+    btn.setAttribute('aria-busy','true');
+
+    try{
+      const id  = btn.dataset.variantId;
+      const qty = btn.dataset.qty || 1;
+
+      await addToCart(id, qty);
+
+      // optimistic bump
+      const current = parseInt((document.querySelector('.cart-count-bubble .text')?.textContent || '0'),10) || 0;
+      setCartCount(current + Number(qty));
+
+      await refreshSections();
+      openDrawer();
+
+      // final truth
+      await fetchCartCount();
+    } catch(err){
+      console.error(err);
+      alert('Sorry, we could not add this item to your cart. Please try again.');
+    } finally {
+      btn.dataset.loading = '';
+      btn.removeAttribute('aria-busy');
+    }
+  }, { passive: false });
+})();
+</script>
+
+  <!-- Metricool (footer) -->
+  <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"8711f68830983b188c2b19dbf359784a"})});</script>
+
+
+
+
+
+
+
+
+
+  <script>
+/* ===== CART DRAWER: ROBUST OPEN/CLOSE ===== */
+
+(function(){
+  // Optional: agar theme me global var na ho
+  if (typeof window.cartDrawerOpen === 'undefined') window.cartDrawerOpen = false;
+
+  // Helpers
+  function $(sel, root=document){ return root.querySelector(sel); }
+
+  function moveToBody(node){
+    if (!node || node.__movedToBody) return;
+    try { document.body.appendChild(node); node.__movedToBody = true; } catch(e){}
+  }
+
+  function lockScroll(){
+    // Add class on <html> instead of inline styles (safer + predictable)
+    document.documentElement.classList.add('is-cart-open');
+    // Compensate scrollbar shift on desktop (optional)
+    const hasScrollbar = window.innerWidth > document.documentElement.clientWidth;
+    if (hasScrollbar) {
+      const pr = parseInt(getComputedStyle(document.body).paddingRight)||0;
+      document.body.style.paddingRight = (pr + (window.innerWidth - document.documentElement.clientWidth)) + 'px';
+    }
+  }
+
+  function unlockScroll(){
+    document.documentElement.classList.remove('is-cart-open');
+    document.body.style.paddingRight = '';
+  }
+
+  function focusFirst(el){
+    try{
+      const f = el.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (f && f.focus) setTimeout(()=>f.focus(), 50);
+    } catch(e){}
+  }
+
+  // Public: Open
+  window.openCartDrawer = function openCartDrawer(){
+    const drawer  = document.getElementById('cart-drawer') || $('cart-drawer, cart-notification');
+    const overlay = document.querySelector('.cart-drawer-overlay');
+
+    if (!drawer || !overlay) return;
+
+    // Ensure they are under <body> so transforms on wrappers don’t clip them
+    moveToBody(overlay);
+    moveToBody(drawer);
+
+    // ARIA
+    drawer.setAttribute('aria-hidden', 'false');
+    overlay.setAttribute('aria-hidden', 'false');
+
+    // Activate
+    overlay.classList.add('active');
+    drawer.classList.add('active');
+
+    // Scroll lock
+    lockScroll();
+    window.cartDrawerOpen = true;
+
+    // (Your existing) Load cart contents
+    try { if (typeof loadCartDrawer === 'function') loadCartDrawer(); } catch(e){}
+
+    // Focus for a11y
+    focusFirst(drawer);
+  };
+
+  // Public: Close
+  window.closeCartDrawer = function closeCartDrawer(){
+    const drawer  = document.getElementById('cart-drawer') || $('cart-drawer, cart-notification');
+    const overlay = document.querySelector('.cart-drawer-overlay');
+    if (!drawer || !overlay) return;
+
+    drawer.classList.remove('active');
+    overlay.classList.remove('active');
+
+    drawer.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('aria-hidden', 'true');
+
+    unlockScroll();
+    window.cartDrawerOpen = false;
+  };
+
+  // Overlay click & Esc key support
+  document.addEventListener('click', (e)=>{
+    const overlay = e.target.closest && e.target.closest('.cart-drawer-overlay');
+    if (overlay) { e.preventDefault(); closeCartDrawer(); }
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && window.cartDrawerOpen) {
+      e.preventDefault();
+      closeCartDrawer();
+    }
+  });
+
+  // Prevent background scroll on touch while drawer open (iOS fix)
+  document.addEventListener('touchmove', (e)=>{
+    if (!window.cartDrawerOpen) return;
+    const drawer = document.getElementById('cart-drawer');
+    if (!drawer) return;
+    // Allow scroll only inside drawer’s scrollable areas
+    if (!drawer.contains(e.target)) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  // sare <add-to-cart> buttons pick karo
+  document.querySelectorAll("add-to-cart").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      // normal behavior rok do (agar koi default form submit hota ho)
+      e.preventDefault();
+
+      // variant id aur qty nikaal lo
+      const variantId = btn.dataset.variantId;
+      const qty = btn.dataset.qty || 1;
+
+      // Shopify add-to-cart endpoint call karo
+      try {
+        await fetch("/cart/add.js", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ items: [{ id: Number(variantId), quantity: Number(qty) }] })
+        });
+
+        // sections refresh/update karo (optional: agar tumhare cart bubble/drawer me live data chahiye)
+        if (typeof refreshSections === "function") {
+          await refreshSections();
+        }
+
+        // ✅ cart drawer turant khol do
+        if (typeof openCartDrawer === "function") {
+          openCartDrawer();
+        }
+      } catch (err) {
+        console.error("Add to cart failed:", err);
+        alert("Sorry, item add nahi ho saka. Please try again.");
+      }
+    });
+  });
+});
+
+
+
+
+</script>
+
+
+<div class="cart-drawer-overlay" aria-hidden="true"></div>
+
+
+
+<script>
+/*
+ * Inline Heart: increment ONLY if NO popup opens.
+ * Targets: <svg class="inline-heart-add"> … </svg>   OR any element with [data-heart]
+ */
+(function(){
+  const THEME_HEX = '#a85a3b';
+  const STORAGE_KEY = 'swymWishlistCountDisplay';
+
+  /* ---------------- Badge: header ya floating fallback ---------------- */
+  function getHeaderWishlistLink() {
+    return document.querySelector('a.header__icon[aria-label^="Wishlist"]')
+        || document.querySelector('a.header__icon[title^="Wishlist"]')
+        || document.querySelector('a.header__icon[href*="wishlist"]');
+  }
+
+  function ensureFloatingBadge() {
+    let b = document.getElementById('wishlist-floating-badge');
+    if (!b) {
+      b = document.createElement('div');
+      b.id = 'wishlist-floating-badge';
+      b.className = 'wishlist-count';
+      b.hidden = true;
+      b.textContent = '0';
+      Object.assign(b.style, {
+        position:'fixed', top:'10px', right:'10px',
+        minWidth:'22px', height:'22px', lineHeight:'22px',
+        padding:'0 7px', borderRadius:'999px',
+        fontSize:'13px', fontWeight:'700', textAlign:'center',
+        background: THEME_HEX, color:'#fff', zIndex:'99999',
+        boxShadow:'0 2px 8px rgba(0,0,0,.15)', pointerEvents:'none'
+      });
+      document.body.appendChild(b);
+    }
+    return b;
+  }
+
+  function ensureBadge() {
+    const link = getHeaderWishlistLink();
+    if (link) {
+      let b = link.querySelector('.wishlist-count');
+      if (!b) {
+        b = document.createElement('span');
+        b.className = 'wishlist-count';
+        b.hidden = true;
+        b.textContent = '0';
+        if (getComputedStyle(link).position === 'static') link.style.position = 'relative';
+        Object.assign(b.style, {
+          position:'absolute', top:'-6px', right:'-6px',
+          minWidth:'18px', height:'18px', lineHeight:'18px',
+          padding:'0 5px', borderRadius:'999px',
+          fontSize:'12px', fontWeight:'600', textAlign:'center',
+          background: THEME_HEX, color:'#fff', zIndex:'2', pointerEvents:'none'
+        });
+        link.appendChild(b);
+      }
+      link.classList.add('has-wishlist-badge');
+      return b;
+    }
+    // header link na mile → floating fallback
+    return ensureFloatingBadge();
+  }
+
+  function setA11y(n){
+    const link = getHeaderWishlistLink();
+    if (!link) return;
+    link.setAttribute('aria-label', n>0 ? `Wishlist (${n})` : 'Wishlist');
+    link.setAttribute('title',     n>0 ? `Wishlist (${n})` : 'Wishlist');
+  }
+
+  function storeCount(n){ try { localStorage.setItem(STORAGE_KEY, String(Math.max(0, Number(n)||0))); } catch(e){} }
+  function readCount(){ try { return parseInt(localStorage.getItem(STORAGE_KEY)||'0',10)||0; } catch(e){ return 0; } }
+
+  function drawBadge(n, {persist=true} = {}) {
+    const b = ensureBadge(); if (!b) return;
+    n = Math.max(0, Number(n)||0);
+    if (n > 0) { b.textContent = n > 9 ? '9+' : String(n); b.hidden = false; }
+    else { b.textContent = '0'; b.hidden = true; }
+    setA11y(n);
+    if (persist) storeCount(n);
+  }
+
+  function getBadgeCount() {
+    const b = ensureBadge();
+    if (!b || b.hidden) return 0;
+    const n = parseInt((b.textContent || '0').replace('+',''), 10);
+    return isNaN(n) ? 0 : n;
+  }
+
+  /* ---------------- Popup detection (strict visible check) ---------------- */
+  function isTrulyVisible(el){
+    if (!el) return false;
+    const style = getComputedStyle(el);
+    if (el.getAttribute('aria-hidden') === 'true') return false;
+    if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  }
+
+  function anySwymPopupVisible(){
+    const cand = document.querySelectorAll(
+      '.swym-ui, .swym-modal, .swym-wishlist-modal, .swym-overlay, [role="dialog"][class*="swym"], .swym-is-open'
+    );
+    for (const el of cand) { if (isTrulyVisible(el)) return true; }
+    // kuch themes body/html par flag class lagati hain:
+    if (document.documentElement.className.toLowerCase().includes('swym')
+     || document.body.className.toLowerCase().includes('swym')) {
+      // phir bhi koi visible element nahi mila → treat as not open
+    }
+    return false;
+  }
+
+  function willPopupOpen(cb) {
+    if (anySwymPopupVisible()) { cb(true); return; }
+    let opened = false;
+    const obs = new MutationObserver(() => {
+      if (anySwymPopupVisible()) { opened = true; obs.disconnect(); cb(true); }
+    });
+    obs.observe(document.documentElement, { childList:true, subtree:true });
+    // 450ms: agar kuch visible nahi aaya to NO popup
+    setTimeout(() => { if (!opened) { obs.disconnect(); cb(false); } }, 450);
+  }
+
+  /* ---------------- Heart helpers ---------------- */
+  function findHeartSvg(target){
+    const host = target.closest && (target.closest('.inline-heart-add') || target.closest('[data-heart]'));
+    if (!host) return null;
+    return host.tagName && host.tagName.toLowerCase() === 'svg' ? host : host.querySelector('svg');
+  }
+
+  function fillSvgHeart(svg) {
+    svg.classList.add('is-filled');
+    try {
+      const p = svg.querySelector('path');
+      if (p) { p.setAttribute('fill', THEME_HEX); p.setAttribute('stroke', THEME_HEX); }
+    } catch(e){}
+  }
+
+  /* ---------------- First paint ---------------- */
+  document.addEventListener('DOMContentLoaded', function(){
+    ensureBadge();
+    const saved = readCount();
+    if (saved > 0) drawBadge(saved, {persist:false});
+  });
+
+  /* ---------------- Click handler ---------------- */
+  document.addEventListener('click', function(e){
+    const svg = findHeartSvg(e.target);
+    if (!svg) return;
+
+    // Already counted?
+    if (svg.dataset.added === '1') return;
+
+    willPopupOpen(function(opened){
+      if (opened) {
+        // Popup khul gaya → counter add NAHI karna
+        return;
+      }
+      // No popup → increment ONCE
+      drawBadge(getBadgeCount() + 1);
+      fillSvgHeart(svg);
+      svg.dataset.added = '1';
+    });
+  });
+})();
+</script>
+
+
+  
+</body>
+</html>

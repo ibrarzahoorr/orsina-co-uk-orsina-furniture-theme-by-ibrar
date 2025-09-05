@@ -1,0 +1,35 @@
+{% if product.metafields.doran.prReviewCount and product.metafields.doran.prReviewCount > 0 %}
+<script type="text/javascript">
+  window.$prDoranInit = window.$prDoranInit || {};
+  window.$prDoranInit.ratingWidgetReview = window.$prDoranInit.ratingWidgetReview || {};
+  var productReview = {
+    reviewsCount: {{ product.metafields.doran.prReviewCount | default: 0 }},
+    averageRating: {{ product.metafields.doran.prAvgRating | default: 0 }},
+    stars1: {{ product.metafields.doran.prStar1 | default: 0 }},
+    stars2: {{ product.metafields.doran.prStar2 | default: 0 }},
+    stars3: {{ product.metafields.doran.prStar3 | default: 0 }},
+    stars4: {{ product.metafields.doran.prStar4 | default: 0 }},
+    stars5: {{ product.metafields.doran.prStar5 | default: 0 }}
+  }
+  if (typeof window.$prDoranInit.ratingWidgetReview['{{ product.id }}'] === 'undefined') {
+    window.$prDoranInit.ratingWidgetReview['{{ product.id }}'] = productReview;
+  } else {
+    var existingProductReview = window.$prDoranInit.ratingWidgetReview['{{ product.id }}'];
+    window.$prDoranInit.ratingWidgetReview['{{ product.id }}'] = Object.assign(existingProductReview, productReview);
+  }
+</script>
+<div
+  data-dr="rating-widget"
+  data-class-name="collection-page"
+  data-hide-detail="true"
+  data-product-id="{{ product.id }}"
+  data-reviews-count="{{ product.metafields.doran.prReviewCount | default: 0 }}"
+  data-average-rating="{{ product.metafields.doran.prAvgRating | default: 0 }}"
+  data-star1="{{ product.metafields.doran.prStar1 | default: 0 }}"
+  data-star2="{{ product.metafields.doran.prStar2 | default: 0 }}"
+  data-star3="{{ product.metafields.doran.prStar3 | default: 0 }}"
+  data-star4="{{ product.metafields.doran.prStar4 | default: 0 }}"
+  data-star5="{{ product.metafields.doran.prStar5 | default: 0 }}"
+  data-show-only-reviews-count="true"
+></div>
+{% endif %}

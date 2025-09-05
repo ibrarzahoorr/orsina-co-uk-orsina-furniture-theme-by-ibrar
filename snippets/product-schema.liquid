@@ -1,0 +1,30 @@
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.title }}",
+  "url": "{{ shop.url }}{{ product.url }}",
+  "image": "{{ shop.url }}{{ product.featured_image | img_url }}",
+  "description": "{{ page_description }}",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "{{ shop.currency }}",
+    "price": "{{ product.price | money_without_currency }}",
+    "itemCondition": "http://schema.org/NewCondition",
+    "availability": "http://schema.org/InStock"
+  },
+  "review": {
+    "@type": "Review",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "{{ product.rating }}",
+      "bestRating": 5
+    },
+    "author": {
+      "@type": "Person",
+      "name": "{{ product.author }}"
+    },
+    "reviewBody": "{{ product.review }}"
+  }
+}
+</script>

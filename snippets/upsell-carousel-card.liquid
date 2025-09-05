@@ -1,0 +1,134 @@
+{% comment %}
+Renders a single product card inside the upsell carousel.
+Params:
+- related_product (Product)
+Robust image selection with 3-level fallback:
+  1) featured_media.preview_image
+  2) featured_image
+  3) images.first
+{% endcomment %}
+
+{% liquid
+  assign p = related_product
+  assign first_variant = p.selected_or_first_available_variant | default: p.variants.first
+  assign available_variants = p.variants | where: 'available', true
+  assign price = first_variant.price
+  assign compare = first_variant.compare_at_price | default: 0
+
+  # --- Robust image selection ---
+  assign prd_image = blank
+
+  if p.featured_media and p.featured_media.preview_image
+    assign prd_image = p.featured_media.preview_image
+  endif
+
+  if prd_image == blank and p.featured_image
+    assign prd_image = p.featured_image
+  endif
+
+  if prd_image == blank and p.images and p.images.size > 0
+    assign prd_image = p.images.first
+  endif
+%}
+
+<div class="product-card" data-product-id="{{ p.id }}">
+  {% if request.design_mode %}
+    <div class="pc-debug">
+      ✅ {{ p.title | truncate: 28 }}
+      {% if prd_image %}
+        — <small>img ok</small>
+      {% else %}
+        — <small>no image found</small>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="product-image">
+    <a href="{{ p.url }}" class="product-link">
+      {% if prd_image %}
+        {%- comment -%}
+          Use modern image_url + image_tag.
+          widths for responsive loading; sizes = full width on mobile, ~50vw on >=768px (since 2 cards)
+        {%- endcomment -%}
+        {{ prd_image
+          | image_url: width: 720
+          | image_tag:
+            widths: '320,480,600,720',
+            sizes: '(min-width: 768px) 50vw, 100vw',
+            loading: 'lazy',
+            alt: p.title
+        }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-image' }}
+      {% endif %}
+    </a>
+  </div>
+
+  <div class="product-info">
+    <h3 class="product-title"><a href="{{ p.url }}">{{ p.title }}</a></h3>
+
+    <div class="product-price">
+      {% if compare and compare > price %}
+        <span class="sale-price">{{ price | money }}</span>
+        <span class="original-price">{{ compare | money }}</span>
+        {% assign savings = compare | minus: price %}
+        {% assign percentage = savings | times: 100.0 | divided_by: compare | round %}
+        <span class="sale-badge">Save {{ percentage }}%</span>
+      {% else %}
+        <span class="regular-price">{{ price | money }}</span>
+      {% endif %}
+    </div>
+
+    {% if available_variants.size > 1 %}
+      <div class="variant-selector">
+        <select class="variant-select" data-product-id="{{ p.id }}">
+          {% for v in available_variants %}
+            <option value="{{ v.id }}"
+              data-price="{{ v.price }}"
+              data-compare-price="{{ v.compare_at_price | default: 0 }}"
+              {% if v.id == first_variant.id %}selected{% endif %}>
+              {{ v.title }}{% if v.price != first_variant.price %} — {{ v.price | money }}{% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+
+    <div class="quantity-selector">
+      <label class="qty-label">Quantity:</label>
+      <div class="qty-controls">
+        <button class="qty-btn minus-btn" data-action="decrease" type="button" aria-label="Decrease quantity">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <input type="number" class="qty-input" value="1" min="1" max="10" step="1" inputmode="numeric">
+        <button class="qty-btn plus-btn" data-action="increase" type="button" aria-label="Increase quantity">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="add-to-order">
+      <input type="checkbox"
+        id="add-{{ p.id }}"
+        class="order-checkbox"
+        data-variant-id="{{ first_variant.id }}"
+        data-price="{{ first_variant.price }}"
+        data-product-title="{{ p.title | escape }}">
+      <label for="add-{{ p.id }}">
+        <span class="checkbox-text">Add this to my order</span>
+        <span class="item-total" data-base-price="{{ first_variant.price }}">{{ first_variant.price | money }}</span>
+      </label>
+    </div>
+
+    {% if first_variant.inventory_management and first_variant.inventory_quantity <= 5 and first_variant.inventory_quantity > 0 %}
+      <div class="stock-warning">Only {{ first_variant.inventory_quantity }} left in stock!</div>
+    {% elsif first_variant.available == false %}
+      <div class="stock-warning">Out of stock</div>
+    {% endif %}
+  </div>
+</div>

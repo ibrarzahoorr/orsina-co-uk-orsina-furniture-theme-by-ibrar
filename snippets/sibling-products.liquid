@@ -1,0 +1,156 @@
+{%- comment -%}
+  IMPLEMENTATION NOTE: this feature allows to connect different products which are siblings on the same page. It is therefore
+  visually similar to a variant picker with swatches, although it does NOT share the functionality
+{%- endcomment -%}
+
+{%- liquid
+  assign b__contains_product = false
+
+  assign collection_handle_metafield_parts = block.settings.collection_handle_metafield | split: '.'
+  assign collection_handle_metafield_namespace = collection_handle_metafield_parts | first
+  assign collection_handle_metafield_key = collection_handle_metafield_parts | last
+
+  assign sibling_collection_handle = product.metafields[collection_handle_metafield_namespace][collection_handle_metafield_key].value | escape
+  assign sibling_collection = collections[sibling_collection_handle]
+
+  if sibling_collection
+    for product_variation in sibling_collection.products
+      if product_variation == product
+        assign b__contains_product = true
+        break
+      endif
+    endfor
+  endif
+-%}
+
+{%- if b__contains_product -%}
+  {%- liquid
+    assign is_color = false
+    if block.settings.enable_color_swatches
+      assign swatch_file_extension = 'png'
+      assign swatch_trigger = 'products.product.color_swatch_trigger' | t | downcase
+      assign downcased_option = block.settings.option_name | downcase
+
+      if swatch_trigger contains downcased_option
+        assign is_color = true
+      elsif swatch_trigger == 'color' and downcased_option contains 'colour'
+        assign is_color = true
+      endif
+    endif
+
+    assign is_size = false
+    if block.settings.size_chart != blank
+      assign size_trigger = 'products.product.size_chart_trigger' | t | downcase
+      assign downcased_option = block.settings.option_name | downcase
+      if size_trigger contains downcased_option
+        assign is_size = true
+      endif
+    endif
+  -%}
+  <div class="variant-picker grid gap-5">
+    <fieldset class="js product-form__input variant-input-wrapper">
+      {%- liquid
+        assign metafield_parts = block.settings.option_value_metafield | split: '.'
+        assign metafield_namespace = metafield_parts | first
+        assign metafield_key = metafield_parts | last
+      -%}
+      <legend class="form__label">
+        {{ block.settings.option_name | escape }}
+        <span class="form__label-info"
+          >&ndash;&nbsp;{{ product.metafields[metafield_namespace][metafield_key].value | escape -}}
+        </span>
+      </legend>
+
+      {%- for product_variation in sibling_collection.products -%}
+        {%- liquid
+          assign value = product_variation.metafields[metafield_namespace][metafield_key].value
+          if product_variation == product
+            assign selected = true
+          else
+            assign selected = false
+          endif
+        -%}
+
+        <a href="{{ product_variation.url }}" class="block" is="magnet-link">
+          <input
+            type="radio"
+            class="sr-only"
+            id="{{ section_id }}-{{ block.settings.option_name | handle }}-{{ forloop.index0 }}"
+            {% if selected %}
+              checked
+            {% endif %}
+          >
+          {%- if is_color -%}
+            {%- liquid
+              assign color_variant_image = ''
+              assign color_swatch_fallback = value | split: ' ' | last | handle
+              if block.settings.swatches_source == 'variant'
+                if product_variation.featured_media
+                  assign color_variant_image = product_variation.featured_media | image_url: width: 84
+                endif
+              else
+                assign file_name_uniq = product.id | append: '_' | append: value | handle | append: '.' | append: swatch_file_extension
+                assign file_name_custom = blank
+                assign file_name_alt = value | handle | append: '.' | append: swatch_file_extension
+                assign value_downcase = value | downcase
+                assign swatch_config = settings.swatch_config | newline_to_br | split: '<br />'
+                for swatch in swatch_config
+                  assign swatch_parts = swatch | strip | split: ':'
+                  assign swatch_name = swatch_parts.first | downcase | strip
+                  if swatch_name == value_downcase
+                    assign swatch_value = swatch_parts.last | strip
+                    if swatch_value contains '#'
+                      assign color_swatch_fallback = swatch_value
+                      assign file_name_alt = blank
+                    else
+                      assign file_name_custom = swatch_value
+                    endif
+                    break
+                  endif
+                endfor
+              endif
+            -%}
+
+            <label
+              for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}"
+              class="color__swatch color__swatch--{{ block.settings.swatch_type }}{% if block.settings.swatches_source == 'variant' %} color__swatch--variant{% endif %}"
+              style="
+                --swatch-background-color: {{ color_swatch_fallback }};
+                {%- if color_variant_image != '' -%}
+                  --swatch-background-image: url({{ color_variant_image }});
+                {%- else -%}
+                  {%- liquid
+                    assign file_name_final = blank
+                    if images[file_name_uniq] != blank
+                      assign file_name_final = file_name_uniq
+                    elsif file_name_custom != blank and images[file_name_custom] != blank
+                      assign file_name_final = file_name_custom
+                    elsif images[file_name_alt] != blank
+                      assign file_name_final = file_name_alt
+                    endif
+                    
+                    assign swatch_image = blank
+                    if images[file_name_final] != blank
+                      assign swatch_image = images[file_name_final] | image_url: width: 50
+                    elsif file_name_final contains '//cdn.shopify.com/'
+                      assign swatch_image = file_name_final
+                    endif
+                  -%}
+                  {%- if swatch_image != blank -%}--swatch-background-image: url({{ swatch_image }});{%- endif -%}
+                {%- endif -%}
+              "
+              title="{{ value | escape }}"
+            >
+              <span class="color__swatch-dot"></span>
+            </label>
+
+          {%- else -%}
+            <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
+              {{ value }}
+            </label>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </fieldset>
+  </div>
+{%- endif -%}

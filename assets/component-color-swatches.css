@@ -1,0 +1,115 @@
+.card__colors {
+  z-index: 2;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  pointer-events: visible;
+  gap: 0.6rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.card-article-info + .card__colors {
+  margin-inline-start: auto;
+}
+
+.cardcard-information__top .card__colors {
+  justify-content: flex-end;
+}
+
+.color-swatch {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  transition: transform var(--duration-default) ease;
+}
+
+.card__colors--large {
+  gap: 0.3rem;
+}
+
+.card__colors--medium .color-swatch {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.card__colors--large .color-swatch {
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.color-swatch::before,
+.color-swatch::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: scale(.7);
+  background-size: cover;
+  background-color: var(--swatch-background-color);
+  background-image: var(--swatch-background-image);
+  transition: transform var(--duration-long) ease;
+}
+
+@media (min-resolution: 2dppx) {
+  .color-swatch::before,
+  .color-swatch::after {
+    background-image: var(--swatch-background-image-2x, var(--swatch-background-image));
+  }
+}
+
+.color-swatch.is-active::before,
+.color-swatch.is-active::after {
+  transform: scale(1);
+}
+
+.color-swatch a {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-swatch a::before {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background-color: transparent;
+  transform: scale(.7);
+  transition: transform var(--duration-long) ease;
+  box-shadow: inset 0 0 0 .1rem rgb(var(--color-border));
+  filter: brightness(1.1);
+}
+
+.card__colors--medium .color-swatch a::before {
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+.card__colors--large .color-swatch a::before {
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+.color-swatch.is-active a::before {
+  transform: scale(1);
+  filter: brightness(1);
+}
+
+.card__colors .link {
+  line-height: 1;
+}
